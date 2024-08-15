@@ -14,3 +14,11 @@ apt-get clean
 
 apt-get update
 apt-get install sapmachine-21-jdk
+
+# the next command was not part of the code
+export JAVA_HOME=/usr/lib/jvm/sapmachine-21
+
+# the next command was not part of the code
+which java
+# the next command was not part of the code
+java -version
