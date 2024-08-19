@@ -5,6 +5,8 @@
 if [ -d "/etc/apt/trusted.gpg.d" ]; then
   # Directory exists, use tee to add the key to the file
   curl -fsSL https://dist.sapmachine.io/debian/sapmachine.key | sudo tee /etc/apt/trusted.gpg.d/sapmachine.asc
+  # ensure that key file can only written by root. (it is not required that it is readable to group and others, wherefore system-default will decide on this)
+  sudo chmod go-wx /etc/apt/trusted.gpg.d/sapmachine.asc
 else
   # Directory doesn't exist, use apt-key add to add the key
   curl -fsSL https://dist.sapmachine.io/debian/sapmachine.key | sudo apt-key add -
