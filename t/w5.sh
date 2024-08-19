@@ -19,22 +19,22 @@ if [ -d "/etc/apt/trusted.gpg.d" ]; then
   wget -qO- https://dist.sapmachine.io/debian/sapmachine.key | sudo tee /etc/apt/trusted.gpg.d/sapmachine.asc
 else
   # Directory doesn't exist, use apt-key add to add the key
-  wget -q -O- https://dist.sapmachine.io/debian/sapmachine.key | sudo apt-key add -
+  wget -qO- https://dist.sapmachine.io/debian/sapmachine.key | sudo apt-key add -
 fi
 
 # the next commented line was the initial code
 #echo "deb http://dist.sapmachine.io/debian/amd64/ ./" >> /etc/apt/sources.list
-echo "deb http://dist.sapmachine.io/debian/amd64/ ./" > /etc/apt/sources.list.d/sapmachine.list
+echo "deb http://dist.sapmachine.io/debian/amd64/ ./" | sudo tee /etc/apt/sources.list.d/sapmachine.list
 
 # the next command was not part of the code
 # required in rare cases, when the default UMASK does not allow 'read' for group and other
-chmod +r /etc/apt/sources.list.d/sapmachine.list
+sudo chmod +r /etc/apt/sources.list.d/sapmachine.list
 
 # the next command was not part of the initial code
-apt-get clean
+sudo apt-get clean
 
-apt-get update
-apt-get install sapmachine-21-jdk
+sudo apt-get update
+sudo apt-get -y install sapmachine-21-jdk
 
 # the next command was not part of the code
 export JAVA_HOME=/usr/lib/jvm/sapmachine-21
