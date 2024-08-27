@@ -1,6 +1,9 @@
 #!/bin/bash
 ### basis is w5.sh and switched from wget to curl, to enable error identification caused by possible network issues
 
+# set default permission for new files to 644 (rw-r--r--) and new directories will have permissions of 755 (rwxr-xr-x)
+UMASK 022
+
 # Check if the directory exists
 if [ -d "/etc/apt/trusted.gpg.d" ]; then
   # Directory exists, use tee to add the key to the file
