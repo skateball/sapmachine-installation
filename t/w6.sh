@@ -5,8 +5,8 @@
 if [ -d "/etc/apt/trusted.gpg.d" ]; then
   # Directory exists, use tee to add the key to the file
   curl -fsSL https://dist.sapmachine.io/debian/sapmachine.key | sudo tee /etc/apt/trusted.gpg.d/sapmachine.asc
-  # ensure that key file can only written by root. (it is not required that it is readable to group and others, wherefore system-default will decide on this)
-  sudo chmod go-wx /etc/apt/trusted.gpg.d/sapmachine.asc
+  # make it readable for all that user '_apt' can read it
+  sudo chmod 444 /etc/apt/trusted.gpg.d/sapmachine.asc
 else
   # Directory doesn't exist, use apt-key add to add the key
   curl -fsSL https://dist.sapmachine.io/debian/sapmachine.key | sudo apt-key add -
@@ -16,8 +16,8 @@ fi
 echo "deb http://dist.sapmachine.io/debian/amd64/ ./" | sudo tee /etc/apt/sources.list.d/sapmachine.list
 
 # the next command was not part of the code
-# required in rare cases, when the default UMASK does not allow 'read' for group and other
-sudo chmod +r /etc/apt/sources.list.d/sapmachine.list
+# make it readable for all that user '_apt' can read it
+sudo chmod 444 /etc/apt/sources.list.d/sapmachine.list
 
 # the next command was not part of the initial code
 sudo apt-get clean
